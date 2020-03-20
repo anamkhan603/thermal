@@ -9,7 +9,6 @@ from pathlib import Path
 import pickle
 import numpy as np
 
-
 # Import fast.ai Library
 from fastai import *
 from fastai.vision import *
@@ -30,6 +29,7 @@ learn=load_learner(path,'a.pkl')
 
 with open('classifier_pickle','rb') as f:
     cls=pickle.load(f)
+label_dictionary = {0: 'Healthy Plant', 1: 'Stress but recoverable',2:'Cannot Recover'}
 
 def model_predict(img_path):
     """model_predict will return the preprocessed image
@@ -58,12 +58,32 @@ def handle_request():
 @app.route('/calculate', methods = ['GET', 'POST'])
 def handle_response():
 	print("Hello");
-	stringValues= flask.request.values.get['dry', 'wet', 'canopy', 'time']
-	#print("Hello", flask.request);
+    # getting the data from a separate json file.
+	json = request.get_json()
+    
+    # the keys that should be included in the json file.
+	transaction_keys = ['tdry' , 'twet', 'tcanopy', 'timeDay']
+    
+    # return a error message if a key is not included in the file.
 
-	pred=np.array([stringValues])
-	ans=cls.predict(pred)
-	return str(ans)
+
+	#stringValues= flask.request.values.get['dry', 'wet', 'canopy', 'time']
+	#print("Hello", flask.request);
+	a=json[transaction_keys[0]]
+	print(a)
+	b=json[transaction_keys[1]]
+	print(b)
+	c=json[transaction_keys[2]]
+	print(c)
+	d=json[transaction_keys[3]]
+	print(d)
+	pred=np.array([[a,b,c,d]])
+	pr=cls.predict(pred)
+	print(pr)
+	ans=label_dictionary[int(pr)]
+	print(ans)
+	return ans
+
 
 
 app.run(host="127.0.0.1",port=5000, debug=True)
