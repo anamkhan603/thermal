@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="35dp"
         android:layout_marginBottom="7dp"
         android:textSize="20dp"
@@ -102,7 +102,7 @@
         android:text="Check"
         android:background="@drawable/button_round"
         android:padding="5dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
         style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
         android:layout_width="200dp"
@@ -114,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
+        android:paddingTop="0dp"
         android:textSize="25dp"
         android:textColor="@color/colorPrimary"
         android:text="Results" />

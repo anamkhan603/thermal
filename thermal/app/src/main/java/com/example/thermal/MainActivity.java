@@ -141,13 +141,14 @@ public class MainActivity extends AppCompatActivity {
         MultipartBody.Part file = MultipartBody.Part.createFormData("image", "photo.jpg", requestFile);
 
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://a79d79fa.ngrok.io")
+                .baseUrl("http://0def17d1.ngrok.io")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
         ImageClient imageClient = retrofit.create(ImageClient.class);
         Call<ResponseBody> call = imageClient.uploadImage(file);
+
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
