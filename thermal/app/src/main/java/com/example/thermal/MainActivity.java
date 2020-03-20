@@ -153,15 +153,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 try {
-//                    Log.d("Main", "onSuccess: " +response.body().string());
-//                    anamAbc= response.body().string();
-//                    stressResult();
                     String final_result = response.body().string();
                     Toast.makeText(MainActivity.this, "Success "+final_result, Toast.LENGTH_SHORT).show();
                     result.setText("Final Result: " + final_result);
-                   // Log.d("Main", onSuccess:", result);
-                   // System.out.println(result);
-                   // result.setText(response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

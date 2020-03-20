@@ -10,17 +10,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static okhttp3.MediaType.*;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class DataActivity extends AppCompatActivity {
@@ -47,30 +45,34 @@ public class DataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 executeSendMessage(
-                        tdry.getText().toString(),
-                        twet.getText().toString(),
-                        tcanopy.getText().toString(),
-                        timeDay.getText().toString());
+                        tdry.getText().toString()
+                      //  twet.getText().toString(),
+                      //  tcanopy.getText().toString(),
+                      //  timeDay.getText().toString()
+                        );
             }
         });
     }
-        private void  executeSendMessage(String dry,String wet,String canopy, String time){
+        private void  executeSendMessage(String dry){
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS).build();
+
             Retrofit.Builder builder = new Retrofit.Builder()
                     .baseUrl("http://a79d79fa.ngrok.io")
-                 // .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create());
+                    .client(client)
+                    .addConverterFactory(ScalarsConverterFactory.create());
+                    //.addConverterFactory(GsonConverterFactory.create());
             Retrofit retrofit =builder.build();
 
             UserClient userClient =retrofit.create(UserClient.class);
+         //   RequestBody  = RequestBody.create(MediaType.parse("text/plain"), dry,wet,canopy,time);
 
+            Call<ResponseBody> call = userClient.sendMessage(dry);
 
-         RequestBody  = RequestBody.create(parse("text/plain"), dry,wet,canopy,time);
-
-            Call<String> call = userClient.sendMessage(dry, wet, canopy, time);
-
-            call.enqueue(new Callback<String>() {
+            call.enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     try {
                         String revive_result = response.body().string();
