@@ -94,7 +94,7 @@
         android:textColor="@color/colorGrey"
         android:background="@drawable/edit_round"
         android:layout_height="wrap_content"
-        android:hint=" Enter M: Morning and A: Afternoon" />
+        android:hint=" Enter 0: Morning and 1: Afternoon" />
 
     <Button
         android:id="@+id/revive_btn"

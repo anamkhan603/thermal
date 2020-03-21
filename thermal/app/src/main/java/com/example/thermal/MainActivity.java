@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         MultipartBody.Part file = MultipartBody.Part.createFormData("image", "photo.jpg", requestFile);
 
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://0def17d1.ngrok.io")
+                .baseUrl("http://102d8c1b.ngrok.io")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create());
 
@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     String final_result = response.body().string();
-                    Toast.makeText(MainActivity.this, "Success "+final_result, Toast.LENGTH_SHORT).show();
-                    result.setText("Final Result: " + final_result);
+                    //Toast.makeText(MainActivity.this, "Success "+final_result, Toast.LENGTH_SHORT).show();
+                    result.setText("Result: " + final_result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -170,12 +170,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                 String test = "anam abcded";
                 result.setText(test);
-
             }
         });
 
     }
-
 
     private void stressResult(){
         //result= findViewById(R.id.responseText);

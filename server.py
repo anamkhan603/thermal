@@ -14,7 +14,7 @@ from fastai import *
 from fastai.vision import *
 
 # Flask utils
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template,jsonify
 from werkzeug.utils import secure_filename
 
 app = flask.Flask(__name__)
@@ -54,7 +54,6 @@ def handle_request():
 
     return str(preds)
 
-
 @app.route('/calculate', methods = ['GET', 'POST'])
 def handle_response():
 	print("Hello");
@@ -65,7 +64,6 @@ def handle_response():
 	transaction_keys = ['tdry' , 'twet', 'tcanopy', 'timeDay']
     
     # return a error message if a key is not included in the file.
-
 
 	#stringValues= flask.request.values.get['dry', 'wet', 'canopy', 'time']
 	#print("Hello", flask.request);
@@ -80,10 +78,9 @@ def handle_response():
 	pred=np.array([[a,b,c,d]])
 	pr=cls.predict(pred)
 	print(pr)
-	ans=label_dictionary[int(pr)]
-	print(ans)
-	return ans
-
-
+	return jsonify(label_dictionary[int(pr)])
+	#ans=label_dictionary[int(pr)]
+	#print(ans)
+	#return ans
 
 app.run(host="127.0.0.1",port=5000, debug=True)
